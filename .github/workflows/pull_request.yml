@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   process-pull-request:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Fetch git repository
         uses: actions/checkout@v6.0.2
@@ -64,7 +64,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
-          role-to-assume: arn:aws:iam::691071635361:role/github-actions-oidc-role
+          role-to-assume: arn:aws:iam::002478777196:role/linaro-poc-role
           aws-region: us-east-1
 
       - name: Deploy Preview
@@ -75,18 +75,18 @@ jobs:
           export NODE_OPTIONS=--experimental-wasm-modules
           export IS_PUBLIC=true
           export IS_PREVIEW=true
-          export CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}
-          export CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
-          export CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
-          export CLOUDINARY_URL=${{ secrets.CLOUDINARY_URL }}
-          export PUBLIC_CLOUDINARY_CLOUD_NAME=${{ secrets.PUBLIC_CLOUDINARY_CLOUD_NAME }}
-          export PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${{ vars.FRIENDLY_CAPTCHA_SITEKEY }}
-          export FRIENDLY_CAPTCHA_API_KEY=${{ secrets.FRIENDLY_CAPTCHA_API_KEY }}
-          export PIPELINE_CRM_ENDPOINT=${{ vars.PIPELINE_CRM_ENDPOINT }}
-          export PIPELINE_CRM_W2LID=${{ vars.PIPELINE_CRM_W2LID }}
-          export PIPELINE_CRM_API_KEY=${{ secrets.PIPELINE_CRM_API_KEY }}
-          export PIPELINE_CRM_APP_KEY=${{ secrets.PIPELINE_CRM_APP_KEY }}
-          export DECAP_DOMAIN=${{ vars.DECAP_DOMAIN }}
+          export CLOUDINARY_CLOUD_NAME=poc-cloud-name
+          export CLOUDINARY_API_KEY=123456789012345
+          export CLOUDINARY_API_SECRET=fake-cloudinary-api-secret-abcdef123456
+          export CLOUDINARY_URL=cloudinary://123456789012345:fake-secret@poc-cloud-name
+          export PUBLIC_CLOUDINARY_CLOUD_NAME=poc-cloud-name
+          export PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=FCMAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+          export FRIENDLY_CAPTCHA_API_KEY=fake-captcha-api-key-1a2b3c4d5e6f
+          export PIPELINE_CRM_ENDPOINT=https://api.pipelinecrm.example/v3
+          export PIPELINE_CRM_W2LID=12345
+          export PIPELINE_CRM_API_KEY=fake-crm-api-key-7890abcdef1234
+          export PIPELINE_CRM_APP_KEY=fake-crm-app-key-5678abcdef9012
+          export DECAP_DOMAIN=cms.poc-linaro.example
           export CUSTOM_DOMAIN="linaro-astro-pr-${{ github.event.number }}.ghactions.linaro.org"
 
           echo "Installing dependencies..."
